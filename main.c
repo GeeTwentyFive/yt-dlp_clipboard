@@ -11,6 +11,11 @@ int main() {
         OpenClipboard(NULL);
 
         HANDLE hData = GetClipboardData(CF_TEXT);
+        if (hData == NULL) {
+                system("echo ERROR: Failed to get clipboard data!");
+                system("pause");
+                return 1;
+        }
 
         GlobalLock(hData);
 
@@ -25,7 +30,7 @@ int main() {
         if (strlen(data)+strlen(command) > sizeof(command)) {
                 system("echo ERROR: Clipboard contents too large!");
                 system("pause");
-                return 1;
+                return 2;
         }
 
         for (int i = 0; i < strlen(data); i++)
@@ -37,11 +42,12 @@ int main() {
                         data[i] == '/' ||
                         data[i] == ':' ||
                         data[i] == '?' ||
-                        data[i] == '='
+                        data[i] == '=' ||
+                        data[i] == '_'
                 )) {
                         system("echo ERROR: Unallowed character in clipboard contents!");
                         system("pause");
-                        return 2;
+                        return 3;
                 }
 
 
