@@ -47,7 +47,8 @@ int main() {
                         data[i] == ':' ||
                         data[i] == '?' ||
                         data[i] == '=' ||
-                        data[i] == '_'
+                        data[i] == '_' ||
+                        data[i] == '-'
                 )) {
                         system("echo ERROR: Unallowed character in clipboard contents!");
                         system("pause");
