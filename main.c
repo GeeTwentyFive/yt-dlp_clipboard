@@ -8,13 +8,17 @@ char command[8191] = "yt-dlp ";
 
 int main() {
 
-        OpenClipboard(NULL);
+        if (!OpenClipboard(NULL)) {
+                system("echo ERROR: Failed to gain access to clipboard!");
+                system("pause");
+                return 1;
+        }
 
         HANDLE hData = GetClipboardData(CF_TEXT);
         if (hData == NULL) {
                 system("echo ERROR: Failed to get clipboard data!");
                 system("pause");
-                return 1;
+                return 2;
         }
 
         GlobalLock(hData);
@@ -30,7 +34,7 @@ int main() {
         if (strlen(data)+strlen(command) > sizeof(command)) {
                 system("echo ERROR: Clipboard contents too large!");
                 system("pause");
-                return 2;
+                return 3;
         }
 
         for (int i = 0; i < strlen(data); i++)
@@ -47,7 +51,7 @@ int main() {
                 )) {
                         system("echo ERROR: Unallowed character in clipboard contents!");
                         system("pause");
-                        return 3;
+                        return 4;
                 }
 
 
